@@ -15,17 +15,20 @@ def get_args():
 def plot_waveform(filename: str, show_axis: bool = True):
     y, sr = librosa.load(filename)
     print(f'sampling rate = {sr}')
-    print(f'data: {type(y)}, {len(y)}')
+    print(f'data length = {len(y)}')
     fig, ax = plt.subplots(figsize=(21, 9))
-    #ax.set(title='Waveform')
+    # ax.set(title='Waveform')
 
     # 枠やラベル、メモリなどを表示しない場合はoffにする
     if not show_axis:
         ax.axis("off")
 
+    # 描画
     librosa.display.waveshow(y, sr=sr, ax=ax)
     # librosa.display.waveshow(y[1*sr:3*sr], sr=sr, ax=ax)  # 表示範囲調整: 1秒から3秒だけ表示
 
+    # ファイル書き出し & 表示
+    plt.savefig('waveform.png')
     plt.show()
 
 
