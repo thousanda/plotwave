@@ -12,13 +12,20 @@ def get_args():
     return parser.parse_args()
 
 
-def plot_waveform(filename: str):
+def plot_waveform(filename: str, show_axis: bool = True):
     y, sr = librosa.load(filename)
     print(f'sampling rate = {sr}')
     print(f'data: {type(y)}, {len(y)}')
-    fig, ax = plt.subplots(nrows=1, sharex=True)
-    librosa.display.waveshow(y, sr=sr, ax=ax)
+    fig, ax = plt.subplots(figsize=(21, 9))
     #ax.set(title='Waveform')
+
+    # 枠やラベル、メモリなどを表示しない場合はoffにする
+    if not show_axis:
+        ax.axis("off")
+
+    librosa.display.waveshow(y, sr=sr, ax=ax)
+    # librosa.display.waveshow(y[1*sr:3*sr], sr=sr, ax=ax)  # 表示範囲調整: 1秒から3秒だけ表示
+
     plt.show()
 
 
@@ -28,7 +35,7 @@ def main():
     print(f'input file: {filename}')
     p = Path(filename)
     print(f'START: visualize waveform')
-    plot_waveform(filename)
+    plot_waveform(str(p), show_axis=True)
     print('END: done')
 
 
