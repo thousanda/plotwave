@@ -1,7 +1,9 @@
 import argparse
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import librosa
+import librosa.display
 
 
 def get_args():
@@ -11,8 +13,13 @@ def get_args():
 
 
 def plot_waveform(filename: str):
-    x, sr = librosa.load(filename)
-    librosa.display.waveplot(x, sr)
+    y, sr = librosa.load(filename)
+    print(f'sampling rate = {sr}')
+    print(f'data: {type(y)}, {len(y)}')
+    fig, ax = plt.subplots(nrows=1, sharex=True)
+    librosa.display.waveshow(y, sr=sr, ax=ax)
+    #ax.set(title='Waveform')
+    plt.show()
 
 
 def main():
